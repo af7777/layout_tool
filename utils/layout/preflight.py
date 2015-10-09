@@ -1,6 +1,13 @@
+import utils.text.preflight
+import utils.image.rate
+import flow.text_string
+
+from reportlab.lib.units import mm
+
 def init(template):
-	ref_data_y = {}
-	ref_data_x = {}
+	ref_data_line = {}
+	ref_data_row = {}
+
 	for obj_name,obj_data in template.iteritems():
 		if obj_data['type'] == 'frame':
 			x = obj_data['x']
@@ -8,36 +15,49 @@ def init(template):
 			width,height = obj_data['size']
 			content = obj_data['frame content']
 
-			print 'source text', content['text']
-			text = utils_text.text_preflight(content['text'])
-			print 'text for layout', text
+			text = utils.text.preflight.text(content['text'])
 			font = 'Helvetica Neue LT W1G 55 Roman'
 			font_size = 9				
-			text_width,text_height = storage_flows.text_string(text,font,font_size).content_width/mm,storage_flows.text_string(text,font,font_size).content_height/mm
+			text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
 
-			header = utils_text.header_preflight(content['header'])
+			header = utils.text.preflight.header(content['header'])
 			font = 'HelveticaNeue_LT_CYR_57_Cond'
 			font_size = 12
-			header_width,header_height = storage_flows.text_string(header,font,font_size).content_width/mm,storage_flows.text_string(header,font,font_size).content_height/mm
+			header_width,header_height = flow.text_string.init(header,font,font_size).content_width/mm,flow.text_string.init(header,font,font_size).content_height/mm
 			header_x = x + 2
 			header_y = y + 2 + text_height
 
-			image_path = content['image']
-			image_rate_x,image_rate_y = utils_image.rate(image_path)
+			image_path = content['image']['image path']
+			image_rate_x,image_rate_y = utils.image.rate.init(image_path)
 
-			#if x not in ref_data_x:
-			#	ref_data_x[x] = {
-			#	}
+			
+			if image_rate_x == 1:
+				if y not in ref_data_line:
+					ref_data_line[y] = {'image horiz':{
+									'max text height':2 + text_height + header_height,
+									'image rate':[image_rate_y]}
+										}
+				else:
+					print ref_data_line
+					print y
+					if y + 2 + text_height + header_height > ref_data_line[y]['image horiz']['max text height']:
+						ref_data_line[y]['image horiz']['max text height'] = 2 + text_height + header_height
+					array = ref_data_line[y]['image horiz']['image rate']
+					array.append(image_rate_y)
+					ref_data_line[y]['image horiz']['image rate'] = array
+			
+			elif image_rate_y == 1:
+				if y not in ref_data_line:
+					ref_data_line[y] = {'image vert':{
+									'max text height':2 + text_height + header_height,
+									'image rate':[image_rate_x]}
+									}				
+				else:
+					if y + 2 + text_height + header_height > ref_data_line[y]['image vert']['max text height']:
+						ref_data_line[y]['image vert']['max text height'] = 2 + text_height + header_height
+					array = ref_data_line[y]['image vert']['image rate']
+					array.append(image_rate_x)
+					ref_data_line[y]['image vert']['image rate'] = array
 
-			if y not in ref_data_y:
-				ref_data_y[y] = {
-								'max text height':2 + text_height + header_height,
-								'image rate x':[image_rate_x]
-				}
-			else:
-				if y + 2 + text_height + header_height > ref_data_y[y]['max text height']:
-					ref_data_y[y]['max text height'] = 2 + text_height + header_height
-				array = ref_data_y[y]['image rate x']
-				array.append(image_rate_x)
-				ref_data_y[y]['image rate x'] = array
-	return(ref_data_y)
+	print ref_data_line
+	return(ref_data_line)

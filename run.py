@@ -8,6 +8,7 @@ from templates import horeca
 import grid.generic
 import frame.generic
 import os
+from reportlab.lib.units import mm
 
 
 page_size = [210,297]
