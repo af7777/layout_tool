@@ -4,6 +4,7 @@
 import csv
 import re
 import os
+import images_plain_folder
 
 '''schema = {'page':string
 			'header':string
@@ -14,18 +15,12 @@ import os
 			'image':string
 			}'''
 
-def image_plain_folder(path):
-	pool = {}
-	for root,dirs,files in os.walk(path):
-		for f in files:
-			mgb = f[:f.find('-')]
-			pool[mgb] = os.path.join(root,f)
-	return pool
 
 
-def adv_text(path):
+
+def init(path,images_path):
 	offers = {}
-	image_pool = image_plain_folder('/home/raven/git/pages/imageDb/horeca/')
+	image_pool = images_plain_folder.init(images_path)
 	with open(path,'rb') as csvfile:
 		reader = csv.reader(csvfile,delimiter=';',quotechar='"')
 		row_number = -1
@@ -38,8 +33,8 @@ def adv_text(path):
 				mgb_art = row[0]
 				price = row[12].replace('.','')[:-1].replace(',','.')
 				page = row[13]
-				if mgb_art not in image_pool:
-					image = '/home/raven/git/pages/imageDb/test1.jpg'
+				if str(mgb_art) not in image_pool:
+					image = {'text': 'place holder', 'image path': '/home/raven/git/pages/imageDb/test1.jpg', 'clipping path': False}
 				else:
 					image = image_pool[mgb_art]
 				
@@ -63,8 +58,8 @@ def adv_text(path):
 	return offers 
 
 if __name__ == '__main__':
-	image_plain_folder('/home/raven/git/pages/imageDb/test/')
-	#for key,value in adv_text('/home/raven/git/pages/data/adv_source/test1.csv').iteritems():
-	#	print key
-	#	for offer in value:
-	#		print '\t',offer['mcc art']
+	for key,value in init('/home/raven/git/pages/data/adv_source/horeca_1.csv','/home/raven/git/pages/imageDb/horeca/').iteritems():
+		print key
+		for offer in value:
+			print '\t',offer['mcc art']
+			print '\t\t',offer['image']
