@@ -11,8 +11,8 @@ def init(path):
 	for root,dirs,files in os.walk(path):
 		for f in files:
 			mgb = f[:f.find('-')]
-			pool[mgb] = {'image path' :os.path.join(root,f),
+			pool[mgb] = {'image path': os.path.join(root,f),
 						'clipping path': False,
-						'text' = None
+						'text': None
 						}
 	return pool
