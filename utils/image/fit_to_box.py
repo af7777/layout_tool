@@ -18,7 +18,6 @@ def init(box_size,image_path,verbose = False):
 			size_x = box_width
 			size_y = box_width * rate
 			if size_y > box_height:
-				print 'fallback'
 				size_x = box_height
 				size_y = box_height * rate
 			print rate
@@ -29,7 +28,7 @@ def init(box_size,image_path,verbose = False):
 			rate = float(image_width) / float(image_height)
 			size_x = box_height * rate
 			size_y = box_height
-			if size_y > box_height:
+			if size_x > box_width:
 				size_x = box_width * rate
 				size_y = box_width
 		else:

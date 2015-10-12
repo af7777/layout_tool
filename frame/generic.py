@@ -70,59 +70,51 @@ def init(template,sync_frames = True):
 			image_path = content['image']['image path']
 			print image_path
 			image_rate_x,image_rate_y = utils.image.rate.init(image_path)		
-			#if width > height:
-			#	print 'horizontal frame'
-			#	if image_rate_x == 1:
-			#		cx = 0.5
-			#		cy = 0.4
+			if width > height:
+				print 'horizontal frame'
+				if image_rate_x == 1:
+					cx = 0.5
+					cy = 0.45
 
-			#		image_box_width = width*0.9
+					image_box_width = width*0.95
 					
-			#		if sync_frames == True:
+					if sync_frames == True:
+						if len(ref_data[y]['image horiz']['image rate']) > 1:
+							print 'multiple horizontal'
+							image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
+							image_box_y = y + ref_data[y]['image horiz']['max text height'] + 2
+							#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
+						#one horizontal image in line
+						else:
+							image_box_height = (height - text_height - header_height - 2)*cy*2
+							image_box_y = y + text_height + header_height + 2
 
-			#			for key,value in ref_data[y]:
-			#				print key
-			#				print '\t',value
+					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
+					image_x = x + width*cx - image_width/2 + 1.5
+					image_y = image_box_y + image_box_height*cy - image_height/2
+			
 
-			#			if ref_data[y]['image rate x'].count(1) == len(ref_data[y]['image rate x']):
-			#				if 1 not in ref_data[y]['image rate x']:
-			#					image_box_height = (height - ref_data[y]['max text height']) * cy - 4
-			#					image_y = y + ref_data[y]['max text height'] + 2
-			#				else:
-			#					image_box_height = height - text_height - header_height -2
-			#					image_y = y + text_height + header_height + 2
-			#			else:
-			#				image_box_height = (height - text_height - header_height) * cy - 2
-			#				image_y = y + text_height + header_height
-#					else:
-#						image_box_height = (height - text_height - header_height - 2)* cy - 2 
-#						image_y = y + text_height + header_height 
-#
-#					image_width,image_height = utils.image.fit_to_box.init.init([image_box_width,image_box_height],image_path)
-#					image_x = x + width*cx - image_width/2
+				elif image_rate_y == 1:
+					print 'ok'
+					cx = 0.5
+					cy = 0.4
+					
+					if sync_frames == True:
+						#more than one horizontal image in line
+						if len(ref_data[y]['image vert']['image rate']) > 1:
+							print 'multiple horizontal'
+							image_box_height = (height - ref_data[y]['image vert']['max text height'])*0.9 - 2
+							image_box_y = y + ref_data[y]['image horiz']['max text height']
+							#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
+						#one horizontal image in line
+						else:
+							print 'single'
+							image_box_height = (height - text_height - header_height)*0.9 - 2
+							image_box_y = y + text_height + header_height + 2
 
-#				elif image_rate_y == 1:
-#					cx = 0.5
-#					image_box_width = width*0.8
-#					
-#					if sync_frames == True:		
-#						if len(ref_data[y]['image rate x']) > 1:
-#							if 1 not in ref_data[y]['image rate x']:
-#								image_box_height = height - ref_data[y]['max text height'] - 4
-#								image_y = y + ref_data[y]['max text height'] + 2
-#							else:
-#								print 'ok'
-#								image_box_height = height - text_height - header_height
-#								image_y = y + text_height + header_height - 4
-#						else:
-#							image_box_height = height - text_height - header_height
-#							image_y = y + text_height + header_height
-#					else:
-#						image_box_height = height - text_height - header_height - 4
-#						image_y = y + text_height + header_height 
-#
-#					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-#					image_x = x + width*cx - image_width/2
+					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
+					image_x = x + width*cx - image_width/2 + 1.5
+					image_y = image_box_y + 2
 		
 			if width < height:
 				print 'vertical frame'
@@ -136,48 +128,41 @@ def init(template,sync_frames = True):
 						#more than one horizontal image in line
 						if len(ref_data[y]['image horiz']['image rate']) > 1:
 							print 'multiple horizontal'
-							image_box_height = height - ref_data[y]['image horiz']['max text height'] - header_height - 2
+							image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
 							image_box_y = y + ref_data[y]['image horiz']['max text height'] + 2
-							image_box_height = height - ref_data[y]['image horiz']['max text height'] 
-							image_box_width = width*0.8
-							print 'box width',image_box_width
+							#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
 						#one horizontal image in line
 						else:
 							print 'single'
-							image_box_height = height - text_height - header_height - 2
+							image_box_height = height - text_height - header_height
 							image_box_y = y + text_height + header_height + 2
 
 					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
 					image_x = x + width*cx - image_width/2 + 1.5
-					image_y = image_box_y
+					image_y = image_box_y + image_box_height/2 - image_height/2
+			
 
 				elif image_rate_y == 1:
 					print 'ok'
 					cx = 0.5
 					cy = 0.4
-					image_box_width = width*0.8
 					
-					if sync_frames == True:		
+					if sync_frames == True:
+						#more than one horizontal image in line
 						if len(ref_data[y]['image vert']['image rate']) > 1:
-						#	if 1 not in ref_data[y]['image rate x']:
-						#		image_box_height = height - ref_data[y]['max text height'] - 4
-						#		image_y = y + ref_data[y]['max text height'] + 2
-						#	else:
-							image_box_height = height - text_height - header_height - 2
-#						area_y = y + text_height + header_height
-#						if cy < 0.5:
-#							image_box_height = area_height*0.85
-#							image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-#							image_y = area_y + area_height/2 - image_height/2
-						#else:
-						#	image_box_height = height - text_height - header_height
-						#	image_y = y + text_height + header_height
-#					else:
-#						image_box_height = height - text_height - header_height - 4
-#						image_y = y + text_height + header_height 
+							print 'multiple horizontal'
+							image_box_height = (height - ref_data[y]['image vert']['max text height'])*0.9 - 2
+							image_box_y = y + ref_data[y]['image horiz']['max text height'] + 2
+							#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
+						#one horizontal image in line
+						else:
+							print 'single'
+							image_box_height = (height - text_height - header_height)*0.9 - 2
+							image_box_y = y + text_height + header_height + 2
 
-#					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-#					image_x = x + width*cx - image_width/2
+					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
+					image_x = x + width*cx - image_width/2 + 1.5
+					image_y = image_box_y + 2
 
 			frame_template[str(obj_name) + '_image'] = {	
 					'type' : 'image',

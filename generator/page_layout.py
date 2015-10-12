@@ -239,7 +239,7 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 		rightMargin=0,
 		topMargin=0,
 		bottomMargin=0,
-		showBoundary=0,
+		showBoundary=1,
 		cropMarks = False,
 		colorSpace='RGB',
 		pagesize=(page_size_x,page_size_y))
