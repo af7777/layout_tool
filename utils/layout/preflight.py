@@ -31,33 +31,30 @@ def init(template):
 			image_rate_x,image_rate_y = utils.image.rate.init(image_path)
 
 			
-			if image_rate_x == 1:
-				if y not in ref_data_line:
-					ref_data_line[y] = {'image horiz':{
-									'max text height':2 + text_height + header_height,
-									'image rate':[image_rate_y]}
-										}
-				else:
-					print ref_data_line
-					print y
-					if y + 2 + text_height + header_height > ref_data_line[y]['image horiz']['max text height']:
-						ref_data_line[y]['image horiz']['max text height'] = 2 + text_height + header_height
-					array = ref_data_line[y]['image horiz']['image rate']
-					array.append(image_rate_y)
-					ref_data_line[y]['image horiz']['image rate'] = array
+			if y not in ref_data_line:
+				ref_data_line[y] = {'image horiz':{
+									'max text height':None,
+									'image rate':[]},
+									'image vert':{
+									'max text height':None,
+									'image rate':[]}
+									}
+
+
+
+			if image_rate_x == 1:			
+				if y + 2 + text_height + header_height > ref_data_line[y]['image horiz']['max text height']:
+					ref_data_line[y]['image horiz']['max text height'] = 2 + text_height + header_height
+				array = ref_data_line[y]['image horiz']['image rate']
+				array.append(image_rate_y)
+				ref_data_line[y]['image horiz']['image rate'] = array
 			
 			elif image_rate_y == 1:
-				if y not in ref_data_line:
-					ref_data_line[y] = {'image vert':{
-									'max text height':2 + text_height + header_height,
-									'image rate':[image_rate_x]}
-									}				
-				else:
-					if y + 2 + text_height + header_height > ref_data_line[y]['image vert']['max text height']:
-						ref_data_line[y]['image vert']['max text height'] = 2 + text_height + header_height
-					array = ref_data_line[y]['image vert']['image rate']
-					array.append(image_rate_x)
-					ref_data_line[y]['image vert']['image rate'] = array
+				if y + 2 + text_height + header_height > ref_data_line[y]['image vert']['max text height']:
+					ref_data_line[y]['image vert']['max text height'] = 2 + text_height + header_height
+				array = ref_data_line[y]['image vert']['image rate']
+				array.append(image_rate_x)
+				ref_data_line[y]['image vert']['image rate'] = array
 
 	print ref_data_line
 	return(ref_data_line)

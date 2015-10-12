@@ -13,12 +13,17 @@ def init(box_size,image_path,verbose = False):
 
 	if box_width != None and box_height != None:
 		if image_width > image_height:
+			print '!!!!!!!!!!!'
 			rate = float(image_height) / float(image_width)
 			size_x = box_width
 			size_y = box_width * rate
-			if size_y > box_width:
+			if size_y > box_height:
+				print 'fallback'
 				size_x = box_height
 				size_y = box_height * rate
+			print rate
+			print box_width,box_height
+			print size_x,size_y
 
 		elif image_width < image_height:
 			rate = float(image_width) / float(image_height)
