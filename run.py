@@ -4,6 +4,7 @@
 
 from fonts import fonts
 from data import adv_text
+from data import reg_text
 from templates import horeca
 import grid.generic
 import frame.generic
@@ -15,7 +16,7 @@ from reportlab.lib.units import mm
 page_size = [210,297]
 pdf_dir = (os.path.join(os.getcwd(),'out/pdf'))
 
-offer_data = adv_text.init('/home/raven/git/pages/data/adv_source/horeca_1.csv','/home/raven/git/pages/imageDb/horeca/')
+offer_data = reg_text.init('/home/raven/git/pages/data/reg_source/83.csv','/home/raven/git/pages/imageDb/horeca/')
 
 fonts.init()
 

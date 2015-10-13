@@ -58,6 +58,7 @@ def init(template,sync_frames = True):
 			except IndexError:
 				price_kop = '00'
 			price_width = flow.price_std.init(price_rub,price_kop,scale = scale).content_width/mm
+			price_height = flow.price_std.init(price_rub,price_kop,scale = scale).content_height/mm
 			frame_template[str(obj_name) + '_price'] = {
 														'type':'price',
 														'value':str(price_rub) + '.' + str(price_kop),
@@ -76,7 +77,7 @@ def init(template,sync_frames = True):
 					cx = 0.5
 					cy = 0.45
 
-					image_box_width = width*0.95
+					image_box_width = width*0.9
 					
 					if sync_frames == True:
 						if len(ref_data[y]['image horiz']['image rate']) > 1:
@@ -147,13 +148,19 @@ def init(template,sync_frames = True):
 					cx = 0.5
 					cy = 0.4
 					
+					image_box_width = width * 0.8
+
 					if sync_frames == True:
 						#more than one horizontal image in line
 						if len(ref_data[y]['image vert']['image rate']) > 1:
-							print 'multiple horizontal'
-							image_box_height = (height - ref_data[y]['image vert']['max text height'])*0.9 - 2
-							image_box_y = y + ref_data[y]['image horiz']['max text height'] + 2
-							#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
+							try:
+								print 'multiple horizontal'
+								image_box_height = (height - ref_data[y]['image vert']['max text height'])*0.9 - 2
+								image_box_y = y + ref_data[y]['image horiz']['max text height'] + 2
+								#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
+							except:
+								image_box_height = (height - text_height - header_height)*0.9 - 2
+								image_box_y = y + text_height + header_height + 2								
 						#one horizontal image in line
 						else:
 							print 'single'
@@ -164,12 +171,53 @@ def init(template,sync_frames = True):
 					image_x = x + width*cx - image_width/2 + 1.5
 					image_y = image_box_y + 2
 
-			frame_template[str(obj_name) + '_image'] = {	
-					'type' : 'image',
-					'file_name': image_path, 
-					'size':[image_width,image_height],
-					'x':image_x,
-					'y':image_y,
+			#if int(content['mgb art']) in [296066,51566,79825,120757,133605,180945,285357,296068,347396,364721,364721,530672,277652,330437]:
+			#	image_box_width = width *0.9
+			#	image_box_height = width
+			#	image_box_y = y + text_height + header_height + 2
+
+			#	image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
+			#	image_x = x + width*cx - image_width/2 + 1.5
+			#	image_y = image_box_y +1
+										
+
+			try:
+				frame_template[str(obj_name) + '_image'] = {	
+							'type' : 'image',
+							'file_name': image_path, 
+							'size':[image_width,image_height],
+							'x':image_x,
+							'y':image_y,
+							}
+			except:
+				pass
+
+			if 'HORECA SELECT' in header:
+				logo_box_width,logo_box_height = [20,20]
+				logo_path = '/home/raven/git/pages/imageDb/horeca/HORECA_SELECT.png'  
+				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
+				logo_x = x + width - 2 - logo_width + 1
+				logo_y = y + 2 + price_height
+				frame_template[str(obj_name) + '_horeca_logo1'] = {	
+					'type' : 'logo',
+					'file_name': logo_path, 
+					'size':[logo_width,logo_height],
+					'x':logo_x,
+					'y':logo_y,
+					}
+
+			if int(content['mgb art']) in [1333605,277652,330437,530672,51566,364721,295812,296066,296068,295334,322814]:
+				logo_box_width,logo_box_height = [15,15]
+				logo_path = '/home/raven/git/pages/imageDb/horeca/ZAMOROZCA.png'  
+				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
+				logo_x = x + width - 2 - logo_width + 1
+				logo_y = y + height - 2 - logo_height
+				frame_template[str(obj_name) + '_horeca_logo2'] = {	
+					'type' : 'logo',
+					'file_name': logo_path, 
+					'size':[logo_width,logo_height],
+					'x':logo_x,
+					'y':logo_y,
 					}
 
 	for name,data in frame_template.iteritems():

@@ -33,8 +33,6 @@ def text(string):
 	#if len(array) != 0:
 	#	string = string.replace(array[0], '<br/>' + str(array[0])+'<br/>')
 
-	if string[-5:] == '<br/>':
-		string = string[:-5]
 	string = string.replace('различные артикулы','<br/>различные артикулы<br/>')
 	
 	
@@ -78,8 +76,10 @@ def header(string):
 	elif len(array) == 1:
 		string = string.replace(array[0],'<br/>' + array[0] + '<br/>')
 
+	print string,string[-5:]
 	if string[-5:] == '<br/>':
 		string = string[:-5]
 	#fixing douple <br/>
 	string = string.replace('<br/><br/>','<br/>')
 	return(string)
+

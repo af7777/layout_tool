@@ -38,7 +38,7 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 		page_frames.append(image_frame)
 
 		#setting object in frame:
-		image = Image(image_path,size_x,size_y,mask=[0,255, 0,255, 0,255])
+		image = Image(image_path,size_x,size_y,mask='auto')
 		page_elements.append(image)
 		page_elements.append(FrameBreak())
 
@@ -239,7 +239,7 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 		rightMargin=0,
 		topMargin=0,
 		bottomMargin=0,
-		showBoundary=1,
+		showBoundary=0,
 		cropMarks = False,
 		colorSpace='RGB',
 		pagesize=(page_size_x,page_size_y))
