@@ -48,7 +48,35 @@ def init(template,page_data):
 			pass
 
 		elif len(page_data) == 4:
-			pass
+			y_key = 0
+			line_count = 0
+			for key,data in enumerate(page_data):
+				frame_dict[str(key) + '_frame'] = {
+									'x':working_area_x + working_area_width/2*line_count,
+									'y':working_area_y + working_area_height - working_area_height/2*(y_key+1),
+									'size':[working_area_width/2,working_area_height/2],
+									'frame content':data,
+									'type':'frame'
+									}
+				line_count += 1
+
+				if y_key != 0:
+					template[str(key) + '_' + str(y_key) + '_border'] = {
+									'x':working_area_x,
+									'y':working_area_y + working_area_height - working_area_height/2,
+									'width':working_area_width*10,
+									'type':'h_dotted_line'
+									}
+				if line_count == 1:
+					template[str(key) + '_' + str(y_key) + '_vborder'] = {
+									'x':working_area_x + working_area_width/2*line_count,
+									'y':working_area_y,
+									'height':working_area_height,
+									'type':'v_dotted_line'
+									}
+				if line_count == 2:
+					line_count = 0
+					y_key += 1
 
 		elif len(page_data) == 5:
 			pass

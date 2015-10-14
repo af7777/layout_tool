@@ -105,7 +105,11 @@ def init(template,sync_frames = True):
 						if len(ref_data[y]['image vert']['image rate']) > 1:
 							print 'multiple horizontal'
 							image_box_height = (height - ref_data[y]['image vert']['max text height'])*0.9 - 2
-							image_box_y = y + ref_data[y]['image horiz']['max text height']
+							try:
+								image_box_y = y + ref_data[y]['image horiz']['max text height']
+							except:
+								image_box_y = y + text_height + header_height + 2
+								image_box_width = width*0.6
 							#image_box_height = height - ref_data[y]['image horiz']['max text height'] - 2
 						#one horizontal image in line
 						else:
@@ -171,14 +175,14 @@ def init(template,sync_frames = True):
 					image_x = x + width*cx - image_width/2 + 1.5
 					image_y = image_box_y + 2
 
-			#if int(content['mgb art']) in [296066,51566,79825,120757,133605,180945,285357,296068,347396,364721,364721,530672,277652,330437]:
-			#	image_box_width = width *0.9
-			#	image_box_height = width
-			#	image_box_y = y + text_height + header_height + 2
+			if int(content['mgb art']) in [296066,51566,79825,120757,180945,285357,296068,364721,364721,530672,277652,330437]:
+				image_box_width = width *0.9
+				image_box_height = width
+				image_box_y = y + text_height + header_height + 2
 
-			#	image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-			#	image_x = x + width*cx - image_width/2 + 1.5
-			#	image_y = image_box_y +1
+				image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
+				image_x = x + width*cx - image_width/2 + 1.5
+				image_y = image_box_y +1
 										
 
 			try:
