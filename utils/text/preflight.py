@@ -5,6 +5,7 @@ import re
 import data.static
 
 def text(string):
+	print string
 	array = re.findall(r'''\d{5,}''',string)
 	if len(array) > 1:
 		string = string.replace(array[-1] + ' ',array[-1] + '<br/>')

@@ -107,6 +107,7 @@ def init(template,sync_frames = True):
 							image_box_height = (height - ref_data[y]['image vert']['max text height'])*0.9 - 2
 							try:
 								image_box_y = y + ref_data[y]['image horiz']['max text height']
+								image_box_width = width*0.6
 							except:
 								image_box_y = y + text_height + header_height + 2
 								image_box_width = width*0.6
@@ -116,6 +117,7 @@ def init(template,sync_frames = True):
 							print 'single'
 							image_box_height = (height - text_height - header_height)*0.9 - 2
 							image_box_y = y + text_height + header_height + 2
+							image_box_width = width*0.6
 
 					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
 					image_x = x + width*cx - image_width/2 + 1.5
