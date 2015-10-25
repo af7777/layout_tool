@@ -5,6 +5,8 @@ import csv
 import re
 import os
 import images_plain_folder
+import json
+
 
 '''schema = {'page':string
 			'header':string
@@ -29,10 +31,27 @@ def init(images_path,data_path):
 				adv_data[row[1]] = {'header':row[9],
 									'text':row[10]}
 
+	#PLR json
+	json_file = open(os.path.join(data_path,'plr_data.txt'))
+	json_data = json.load(json_file)
+	json_file.close()
+	plr_images = {}
+	for cataloge_id,cataloge_data in json.loads(json_data).iteritems():
+		for prop_name,prop in cataloge_data.iteritems():
+			if prop_name == 'Pages':
+				for page_num,pages in prop.iteritems():
+					for page_market,frames in pages.iteritems():						
+						for frame_num,frame_data in frames.iteritems():
+							if frame_data['mcc_art'] != None:
+								try:
+									plr_images[frame_data['mcc_art'][0]] = frame_data['images'][0]
+								except IndexError:
+									plr_images[frame_data['mcc_art'][0]] = None
 	#reg init
 	offers = {}
 	image_pool = images_plain_folder.init(images_path)
-	path = os.path.join(data_path,'fed.csv')
+	path = os.path.join(data_path,'video_test.csv')
+	print path
 	with open(path,'rb') as csvfile:
 		reader = csv.reader(csvfile,delimiter=';',quotechar='"')
 		row_number = -1

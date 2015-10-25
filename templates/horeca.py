@@ -15,10 +15,10 @@ def init(page_size,verbose = False,header = None,page_num = 1):
 		'top': 
 			{	
 			'type' : 'image',
-			'file_name': u'/home/raven/git/pages/imageDb/HorecaHit-top.jpg', 
-			'size':[utils.image.fit_to_box.init([page_width-4,page_height],os.path.join('/home/raven/git/pages/imageDb/HorecaHit-top.jpg'))[0] + 2,utils.image.fit_to_box.init([page_width,page_height],os.path.join('/home/raven/git/pages/imageDb/HorecaHit-top.jpg'))[1]],
+			'file_name': u'/home/raven/gen_projects/horeca_23/top.tif', 
+			'size':[utils.image.fit_to_box.init([page_width-4,page_height],os.path.join('/home/raven/gen_projects/horeca_23/top.tif'))[0] + 2,utils.image.fit_to_box.init([page_width,page_height],os.path.join('/home/raven/gen_projects/horeca_23/top.tif'))[1]],
 			'x':2,
-			'y':page_height - utils.image.fit_to_box.init([page_width,page_height],os.path.join('/home/raven/git/pages/imageDb/HorecaHit-top.jpg'))[1],
+			'y':page_height - utils.image.fit_to_box.init([page_width,page_height],os.path.join('/home/raven/gen_projects/horeca_23/top.tif'))[1]+4,
 			},
 		'bottom': 
 			{	

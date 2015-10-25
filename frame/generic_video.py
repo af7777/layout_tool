@@ -9,7 +9,7 @@ import flow.text_string
 import flow.price_std
 from reportlab.lib.units import mm
 
-def init(template,sync_frames = True):
+def init2(template,sync_frames = True):
 	if sync_frames == True:
 		ref_data = utils.layout.preflight.init(template)
 	frame_template = {}
@@ -298,3 +298,5 @@ def init(template,sync_frames = True):
 	for name,data in frame_template.iteritems():
 		template[name] = data
 	return(template)
+
+def init(template,frame)
