@@ -10,6 +10,7 @@ import flow.text_string
 import flow.price_std
 import flow.VRFlowable_dotted
 import flow.HRFlowable_dotted
+import flow.rectangle
 
 from reportlab.lib import colors
 from reportlab.lib.colors import HexColor, Color, CMYKColor, PCMYKColor
@@ -92,7 +93,13 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 		obj_frame = Frame(x*mm,y*mm,size_x,size_y,id=str('text_string'),bottomPadding=0,topPadding=0,leftPadding=0)
 
 		page_frames.append(obj_frame)
+		page_elements.append(obj)
+		page_elements.append(FrameBreak())
 
+	def add_rectangle(x,y,width,height,color):
+		obj = flow.rectangle.init(width,height,color)
+		obj_frame = Frame(x,y,width,height,id=str('rectangle'),bottomPadding=0,topPadding=0,leftPadding=0)
+		page_frames.append(obj_frame)		
 		page_elements.append(obj)
 		page_elements.append(FrameBreak())
 
@@ -135,6 +142,20 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			image_frame = Frame(x,y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
 			page_frames.append(image_frame)
 			page_elements.append(FrameBreak())
+
+		elif props['type'] == 'rectangle':
+			x = props['x']*mm
+			y = props['y']*mm
+			size_x = props['size'][0]*mm
+			size_y = props['size'][1]*mm
+			color = props['color']
+			add_rectangle(x,y,size_x,size_y,color)
+			#rect_frame = Frame(size_x,size_y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
+			#page_frames.append(rect_frame)
+			#page_elements.append(FrameBreak())
+			#rect_frame = Frame(x,y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
+			#page_frames.append(rect_frame)
+			#page_elements.append(FrameBreak())		
 
 		elif props['type'] == 'h_dotted_line':
 			x = props['x']*mm
