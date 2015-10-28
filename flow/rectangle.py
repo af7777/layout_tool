@@ -17,4 +17,4 @@ class init(Flowable):
 	def draw(self):
 		self.canv.setFillColor(self.color)
 		self.canv.setStrokeColor(self.color)		
-		self.canv.rect(0,0,self.width,self.height,fill=True, stroke=False)
+		self.canv.rect(0,0,10,10,fill=True, stroke=False)

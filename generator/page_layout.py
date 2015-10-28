@@ -139,23 +139,9 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			y = props['y']*mm
 			size_x = props['size'][0]*mm
 			size_y = props['size'][1]*mm
-			image_frame = Frame(x,y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
-			page_frames.append(image_frame)
+			box_frame = Frame(x,y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
+			page_frames.append(box_frame)
 			page_elements.append(FrameBreak())
-
-		elif props['type'] == 'rectangle':
-			x = props['x']*mm
-			y = props['y']*mm
-			size_x = props['size'][0]*mm
-			size_y = props['size'][1]*mm
-			color = props['color']
-			add_rectangle(x,y,size_x,size_y,color)
-			#rect_frame = Frame(size_x,size_y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
-			#page_frames.append(rect_frame)
-			#page_elements.append(FrameBreak())
-			#rect_frame = Frame(x,y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
-			#page_frames.append(rect_frame)
-			#page_elements.append(FrameBreak())		
 
 		elif props['type'] == 'h_dotted_line':
 			x = props['x']*mm
@@ -170,6 +156,14 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			add_v_dotted_line(x,y,size_y)
 
 	for name,props in data.iteritems():
+		if props['type'] == 'rectangle':
+			x = props['x']*mm
+			y = props['y']*mm
+			size_x = props['size'][0]*mm
+			size_y = props['size'][1]*mm
+			color = props['color']
+			add_rectangle(x,y,size_x,size_y,color)	
+
 		if props['type'] == 'price':
 			value = props['value']
 			x = props['x']
