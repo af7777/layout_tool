@@ -6,7 +6,7 @@ from reportlab.lib.colors import HexColor, Color, CMYKColor, PCMYKColor
 import utils.text.size
 
 class init(Flowable):
-	def __init__(self,string,font_name,font_size,color=HexColor('#FFFFFF'),color_space = 'RGB',x0=0,y0=0,border=True):
+	def __init__(self,string,font_name,font_size,color=HexColor('#FFFFFF'),color_space = 'RGB',x0=0,y0=0,border=False):
 		Flowable.__init__(self)
 
 		self.stroke_width = 0.1

@@ -20,12 +20,14 @@ import flow.text_string
 import flow.price_std
 import flow.rectangle
 
-mult = 10
-page_size = [192*mult/mm/10,128*mult/mm/10]
+mult = 2
+page_size = [(192/mm)*mult,(128/mm)*mult]
 pdf_dir = (os.path.join(os.getcwd(),'out/pdf'))
 
 offer_data = reg_text.init('/home/raven/gen_projects/horeca_23/images/done/','/home/raven/gen_projects/horeca_23')
-
+offer = offer_data[offer_data.keys()[0][0]][0]
+#print offer[0]
+#print offer[0]['price']
 fonts.init()
 for stamp in range(0,80):
 	frame_template = {}
@@ -51,13 +53,13 @@ for stamp in range(0,80):
 		logo_y = height/2 - logo_height/2
 	
 	elif stamp >= 1 and stamp <= 30:
-		step_x =  (width - v_border - logo_width - width/2 - logo_width/2) / 29
-		step_y = (height/2 - logo_height/2 - v_border) / 29
+		step_x =  (width - h_border - logo_width - width/2 - logo_width/2) / 30
+		step_y = (height/2 - logo_height/2 - v_border) / 30
 		logo_x = logo_x - step_x
 		logo_y = logo_y - step_y
 
 	elif stamp > 30:
-		logo_x = width - v_border - logo_width
+		logo_x = width - h_border - logo_width
 		logo_y = v_border
 
 	frame_template['static_logo'] = {	
@@ -74,7 +76,7 @@ for stamp in range(0,80):
 		back_image_box_width = width - h_border*2
 		back_image_box_height = height - v_border - back_image_v_border
 		back_image_width,back_image_height = back_image_box_width,back_image_box_height				
-		back_image_x = width/2 - back_image_width/2
+		back_image_x = width/2 - back_image_box_width/2
 		back_image_y = height/2 + logo_height/2 + back_image_v_border
 	elif stamp >= 1 and stamp <= 30:
 		back_image_x = back_image_x
@@ -86,25 +88,26 @@ for stamp in range(0,80):
 		back_image_x = width/2 - back_image_width/2
 		back_image_y = v_border + logo_height + back_image_v_border
 	elif stamp > 45 and stamp <= 60:
-		width_step = (width- h_border*2 - width/2 - h_border - width*0.01) / 15
+		width_step = (width- h_border*2 - width/2 - h_border - width*0.01) / 14
 		back_image_box_width = back_image_box_width - width_step
 		back_image_box_height = height - v_border*2 - back_image_v_border - logo_height
 		back_image_width = back_image_box_width
 		back_image_height = back_image_box_height
 		back_image_x = h_border
 		back_image_y = v_border + logo_height + back_image_v_border	
-	elif stamp > 60:
+	elif stamp > 60 and stamp <=75:
+		height_step = (height - v_border*2 - back_image_v_border - logo_height - v_border)/15
+		step_y = (v_border + logo_height + back_image_v_border - v_border) / 15
 		back_image_box_width = width/2 - h_border - width*0.01
-		back_image_box_height = height - v_border*2 - back_image_v_border - logo_height
+		back_image_box_height = back_image_box_height + step_y
 		back_image_width = back_image_box_width
 		back_image_height = back_image_box_height
+		back_image_y = back_image_y - step_y		
+	elif stamp > 75:
+		back_image_box_width = width/2 - h_border - width*0.01
+		back_image_width = back_image_box_width
 		back_image_x = h_border
-		back_image_y = v_border + logo_height + back_image_v_border	
-
-		#	back_image_width = back_image_width - width*0.45/30
-		#elif stamp >= 45 and stamp < 60:
-		#	back_image_y = back_image_y - (height/2 + logo_height/2 + 40 - border)/30
-		
+		back_image_y = v_border			
 
 	frame_template['back_image'] = {	
 		'type' : 'image',
@@ -114,13 +117,123 @@ for stamp in range(0,80):
 		'y':back_image_y,
 		}
 
+	#phone and email
+	if stamp > 60:
+		text = "metro-cc.ru"
+		font = 'Helvetica Neue LT W1G 55 Roman'
+		font_size = 20				
+		text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
+		text_x = h_border + back_image_box_width/2 - text_width/2
+		text_y = v_border
+		frame_template['contact_text'] = {	
+					'type' : 'text_string',
+					'text': text, 
+					'x':text_x,
+					'y':text_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#FFFFFF'
+					}
+	#slogan
+	if stamp > 60:
+		text = "ДЛЯ ТЕХ,<br/>KTO DevOps"
+		font = 'Helvetica Neue LT W1G 55 Roman'
+		font_size = 25				
+		text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
+		text_x = h_border + back_image_box_width*0.05
+		text_y = back_image_y + back_image_height - back_image_height*0.1 - text_height
+		frame_template['slogan_text'] = {	
+					'type' : 'text_string',
+					'text': text, 
+					'x':text_x,
+					'y':text_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#FFFFFF'
+					}
+	#price
+	if stamp > 60:
+		price = offer['price']
+		scale = 1.25
+		price_rub = price.split('.')[0]
+		try:
+			price_kop = price.split('.')[1]
+		except IndexError:
+			price_kop = '00'
+		price_width = flow.price_std.init(price_rub,price_kop,scale = scale).content_width/mm
+		price_height = flow.price_std.init(price_rub,price_kop,scale = scale).content_height/mm
+		frame_template['price'] = {
+								'type':'price',
+								'value':str(price_rub) + '.' + str(price_kop),
+								'x':width - h_border - price_width,
+								'y':logo_y + logo_height + h_border,
+								'scale':scale,
+								}
+	#offer header
+		offer_text = utils.text.preflight.text(offer['header'])
+		font = 'HelveticaNeue_LT_CYR_57_Cond'
+		font_size = 15				
+		offer_text_width,offer_text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
+		offer_text_x = width - h_border - offer_text_width
+		offer_text_y = height - v_border - offer_text_height 
+		frame_template['header_text'] = {	
+					'type' : 'text_string',
+					'text': offer_text, 
+					'x':offer_text_x,
+					'y':offer_text_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#000000'
+					}
+
+	#offer text
+	if stamp > 60:
+		text = utils.text.preflight.text(offer['text'])
+		font = 'Helvetica Neue LT W1G 55 Roman'
+		font_size = 12				
+		text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
+		text_x = width - h_border - text_width
+		text_y = logo_y + logo_height + price_height
+		frame_template['offer_text'] = {	
+					'type' : 'text_string',
+					'text': text, 
+					'x':text_x,
+					'y':text_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#000000'
+					}
+
+	#offer image
+	if stamp > 60:
+		offer_path = '/home/raven/gen_projects/horeca_23/images/done/528155-1-3.tif'
+		offer_box_width = logo_width/2
+		offer_box_height = (height - v_border*3 - logo_height)*0.8
+		offer_width,offer_height = utils.image.fit_to_box.init([offer_box_width,offer_box_height],offer_path)
+		offer_width = offer_width
+		offer_height = offer_height
+		
+		offer_x = logo_x + logo_width/4 - offer_width/2
+		offer_y = logo_y + logo_height + v_border + (height - v_border*3 - logo_height)*0.05
+
+		frame_template['offer_image'] = {	
+		'type' : 'image',
+		'file_name': offer_path, 
+		'size':[offer_width,offer_height],
+		'x':offer_x,
+		'y':offer_y,
+		}
 
 	for name,data in frame_template.iteritems():
 		template[name] = data
-		
-	generator.page_layout.layout(template,page_size,'/home/raven/git/pages/imageDb/','/home/raven/git/pages/out/pdf2/',str(stamp) + '.pdf')
-	sourceFile = os.path.join('/home/raven/git/pages/out/pdf2/',str(stamp) + '.pdf')
-	dest_file = os.path.join('/home/raven/git/pages/out/img/',str(stamp) + '.jpg')
+	
+	if len(str(stamp)) < 2 :
+		fname = '0' + str(stamp)
+	else:
+		fname = str(stamp)
+	generator.page_layout.layout(template,page_size,'/home/raven/git/pages/imageDb/','/home/raven/git/pages/out/pdf2/',str(fname) + '.pdf')
+	sourceFile = os.path.join('/home/raven/git/pages/out/pdf2/',str(fname) + '.pdf')
+	dest_file = os.path.join('/home/raven/git/pages/out/img/',str(fname) + '.jpg')
 	command = 'gs -dNOPAUSE -sDEVICE=jpeg -dDEVICEWIDTHPOINTS=192 -dDEVICEHEIGHTPOINTS=128 -dFirstPage=1 -dLastPage=1 -sOutputFile=' + str(dest_file) +' -dJPEGQ=100 -r500 -q ' + str(sourceFile) +' -c quit'
 	os.popen(command)
 

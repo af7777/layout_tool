@@ -11,6 +11,7 @@ import flow.price_std
 import flow.VRFlowable_dotted
 import flow.HRFlowable_dotted
 import flow.rectangle
+import flow.image
 
 from reportlab.lib import colors
 from reportlab.lib.colors import HexColor, Color, CMYKColor, PCMYKColor
@@ -29,18 +30,20 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 	def add_image(path,x,y,size):
 		#setting image vars
 		image_path = path
-		x = x*mm
-		y = y*mm
+		x = x
+		y = y
+		print 'size', size
 		size_x = size[0]*mm
 		size_y = size[1]*mm
 
 		#setting frame
-		image_frame = Frame(x,y,size_x,size_y,id=str(path),bottomPadding=0,topPadding=0,leftPadding=0)
+		image_frame = Frame(x,y,size_x,size_y,id=str(path),bottomPadding=0,topPadding=0,leftPadding=0,rightPadding=0)
 		page_frames.append(image_frame)
 
 		#setting object in frame:
-		image = Image(image_path,size_x,size_y,mask='auto')
-		page_elements.append(image)
+		#image = Image(image_path,size_x,size_y,mask='auto')
+		image_obj = flow.image.init(image_path,size_x,size_y)
+		page_elements.append(image_obj)
 		page_elements.append(FrameBreak())
 
 	def add_price(price,x,y,scale = 1):
@@ -87,8 +90,8 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 		page_elements.append(obj)
 		page_elements.append(FrameBreak())
 
-	def add_text_string(x,y,font,font_size,string,color = '#FFFFFF'):
-		obj = flow.text_string.init(string,font,font_size,color)
+	def add_text_string(x,y,font,font_size,string,color = '#FFFFFF',border = True):
+		obj = flow.text_string.init(string,font,font_size,color,border)
 		size_x,size_y = obj.content_width,obj.content_height
 		obj_frame = Frame(x*mm,y*mm,size_x,size_y,id=str('text_string'),bottomPadding=0,topPadding=0,leftPadding=0)
 
@@ -124,14 +127,15 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			size_x = props['size'][0]*mm
 			size_y = props['size'][1]*mm
 
+			add_image(image_path,image_x,image_y,props['size'])
 			#setting frame
-			image_frame = Frame(image_x,image_y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
-			page_frames.append(image_frame)
+			#image_frame = Frame(image_x,image_y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=size_x*0.01)
+			#page_frames.append(image_frame)
 
 			#setting object in frame:
-			image = Image(image_path,size_x,size_y)
-			page_elements.append(image)
-			page_elements.append(FrameBreak())
+			#image = Image(image_path,size_x,size_y)
+			#page_elements.append(image)
+			#page_elements.append(FrameBreak())
 
 
 		elif props['type'] == 'box' or props['type'] == 'frame':
@@ -142,7 +146,6 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			box_frame = Frame(x,y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
 			page_frames.append(box_frame)
 			page_elements.append(FrameBreak())
-
 		elif props['type'] == 'h_dotted_line':
 			x = props['x']*mm
 			y = props['y']*mm
@@ -170,7 +173,6 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			y = props['y']
 			scale = props['scale']
 			add_price(value,x,y,scale)
-
 		if props['type'] == 'logo':
 			#setting image vars
 			image_path = props['file_name']
@@ -179,14 +181,15 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 			size_x = int(props['size'][0])*mm
 			size_y = int(props['size'][1])*mm
 
+			add_image(image_path,image_x,image_y,props['size'])
 			#setting frame
-			image_frame = Frame(image_x,image_y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
-			page_frames.append(image_frame)
+			#image_frame = Frame(image_x,image_y,size_x,size_y,id=str(name),bottomPadding=0,topPadding=0,leftPadding=0)
+			#page_frames.append(image_frame)
 
 			#setting object in frame:
-			image = Image(image_path,size_x,size_y)
-			page_elements.append(image)
-			page_elements.append(FrameBreak())
+			#image = Image(image_path,size_x,size_y)
+			#page_elements.append(image)
+			#page_elements.append(FrameBreak())
 
 	for name,props in data.iteritems():
 		if props['type'] == 'offer text':
