@@ -213,6 +213,16 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 				add_text_string(x,y,font,font_size,string,color)
 			except:
 				add_text_string(x,y,font,font_size,string)
+	for name,props in data.iteritems():
+		if props['type'] == 'cover image':
+			#setting image vars
+			image_path = props['file_name']
+			image_x = props['x']*mm
+			image_y = props['y']*mm
+			size_x = props['size'][0]*mm
+			size_y = props['size'][1]*mm
+
+			add_image(image_path,image_x,image_y,props['size'])
 
 		elif props['type'] == 'text_wback2':
 			x = object_data['x']
@@ -246,7 +256,19 @@ def layout(data,page_size,imageDb_path,output_dir,file_name):
 					body = object_data['body']
 					add_text(header,body,x,y,size,scale = 1.8)
 
-
+	for name,props in data.iteritems():
+		if props['type'] == 'text_string_front':
+			string = props['text']
+			#print 'layouting',string
+			font = props['font']
+			font_size = props['font size']
+			x = props['x']
+			y = props['y']
+			try:
+				color = props['color']
+				add_text_string(x,y,font,font_size,string,color)
+			except:
+				add_text_string(x,y,font,font_size,string)		
 
 
 	# Building page

@@ -110,7 +110,7 @@ for stamp in range(0,80):
 		back_image_y = v_border			
 
 	frame_template['back_image'] = {	
-		'type' : 'image',
+		'type' : 'cover image',
 		'file_name': back_image_path, 
 		'size':[back_image_width,back_image_height],
 		'x':back_image_x,
@@ -135,24 +135,122 @@ for stamp in range(0,80):
 					'color':'#FFFFFF'
 					}
 	#slogan
-	if stamp > 60:
-		text = "ДЛЯ ТЕХ,<br/>KTO DevOps"
+	if stamp >= 31 and stamp <= 45:
+		slogan = "ДЛЯ ТЕХ,<br/>KTO DevOps"
 		font = 'Helvetica Neue LT W1G 55 Roman'
 		font_size = 25				
-		text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
-		text_x = h_border + back_image_box_width*0.05
-		text_y = back_image_y + back_image_height - back_image_height*0.1 - text_height
-		frame_template['slogan_text'] = {	
-					'type' : 'text_string',
-					'text': text, 
-					'x':text_x,
-					'y':text_y,
+		slogan_width,slogan_height = flow.text_string.init(slogan,font,font_size).content_width/mm,flow.text_string.init(slogan,font,font_size).content_height/mm
+		slogan_x = back_image_x + back_image_width/2 - slogan_width/2
+		slogan_y = back_image_y + back_image_height/2 - slogan_height/2
+		if stamp == 31:
+			slogan = "Д<br/> "
+		if stamp == 32:
+			slogan = "ДЛ<br/> "
+		if stamp == 33:
+			slogan = "ДЛЯ<br/> "
+		if stamp == 34:
+			slogan = "ДЛЯ ТЕ<br/> "
+		if stamp == 35:
+			slogan = "ДЛЯ ТЕХ<br/> "
+		if stamp == 36:
+			slogan = "ДЛЯ ТЕХ,<br/> "
+		if stamp == 37:
+			slogan = "ДЛЯ ТЕХ,<br/>K"
+		if stamp == 38:
+			slogan = "ДЛЯ ТЕХ,<br/>KT"
+		if stamp == 39:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO"
+		if stamp == 40:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO D"
+		if stamp == 41:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO De"
+		if stamp == 42:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO Dev"
+		if stamp == 43:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO DevO"
+		if stamp == 44:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO DevOp"
+		if stamp == 45:
+			slogan = "ДЛЯ ТЕХ,<br/>KTO DevOps"
+
+		frame_template['slogan_slogan'] = {	
+					'type' : 'text_string_front',
+					'text': slogan, 
+					'x':slogan_x,
+					'y':slogan_y,
 					'font':font,
 					'font size':font_size,
 					'color':'#FFFFFF'
 					}
-	#price
+	if stamp == 45:
+		slogan_step_x = (back_image_x + back_image_width/2 - slogan_width/2 - h_border - width*0.05) / 15
+		slogan_step_y = (back_image_y + back_image_height/2 - slogan_height/2 - (v_border + back_image_box_width*0.05)) / 15		
+					
+	if stamp > 45 and stamp <= 60:
+		slogan_x = slogan_x - slogan_step_x
+		slogan_y = slogan_y - slogan_step_y
+		print 'slogan y',slogan_step_y
+		frame_template['slogan_slogan'] = {	
+					'type' : 'text_string_front',
+					'text': slogan, 
+					'x':slogan_x,
+					'y':slogan_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#FFFFFF'
+					}
 	if stamp > 60:
+		slogan = "ДЛЯ ТЕХ,<br/>KTO DevOps"
+		font = 'Helvetica Neue LT W1G 55 Roman'
+		font_size = 25				
+		slogan_width,slogan_height = flow.text_string.init(slogan,font,font_size).content_width/mm,flow.text_string.init(slogan,font,font_size).content_height/mm
+		slogan_x = h_border + back_image_box_width*0.05
+		slogan_y = back_image_y + back_image_height - back_image_height*0.1 - slogan_height
+		frame_template['slogan_slogan'] = {	
+					'type' : 'text_string_front',
+					'text': slogan, 
+					'x':slogan_x,
+					'y':slogan_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#FFFFFF'
+					}
+	
+	#frame content 
+	#offer image
+	if stamp > 31:
+		offer_path = '/home/raven/gen_projects/horeca_23/images/done/528155-1-3.tif'
+		offer_box_width = logo_width/2
+		offer_box_height = (height - v_border*3 - logo_height)*0.8
+		offer_width,offer_height = utils.image.fit_to_box.init([offer_box_width,offer_box_height],offer_path)
+		offer_width = offer_width
+		offer_height = offer_height
+		
+		image_x = logo_x + logo_width/4 - offer_width/2
+		image_y = logo_y + logo_height + v_border + (height - v_border*3 - logo_height)*0.05
+
+		frame_template['offer_image'] = {	
+		'type' : 'image',
+		'file_name': offer_path, 
+		'size':[offer_width,offer_height],
+		'x':image_x,
+		'y':image_y,
+		}
+
+	offer_text = utils.text.preflight.text(offer['header'])
+	font = 'HelveticaNeue_LT_CYR_57_Cond'
+	font_size = 15				
+	offer_text_width,offer_text_height = flow.text_string.init(offer_text,font,font_size).content_width/mm,flow.text_string.init(offer_text,font,font_size).content_height/mm
+
+
+	text = utils.text.preflight.text(offer['text'])
+	font = 'Helvetica Neue LT W1G 55 Roman'
+	font_size = 12				
+	text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
+	allign_x = width - int(max([offer_text_width,text_width])) - h_border - 0.5*mm
+
+	#price
+	if stamp > 31:
 		price = offer['price']
 		scale = 1.25
 		price_rub = price.split('.')[0]
@@ -160,40 +258,20 @@ for stamp in range(0,80):
 			price_kop = price.split('.')[1]
 		except IndexError:
 			price_kop = '00'
+		price_y = image_y
 		price_width = flow.price_std.init(price_rub,price_kop,scale = scale).content_width/mm
 		price_height = flow.price_std.init(price_rub,price_kop,scale = scale).content_height/mm
 		frame_template['price'] = {
 								'type':'price',
 								'value':str(price_rub) + '.' + str(price_kop),
-								'x':width - h_border - price_width,
-								'y':logo_y + logo_height + h_border,
+								'x':allign_x,
+								'y':image_y,
 								'scale':scale,
 								}
-	#offer header
-		offer_text = utils.text.preflight.text(offer['header'])
-		font = 'HelveticaNeue_LT_CYR_57_Cond'
-		font_size = 15				
-		offer_text_width,offer_text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
-		offer_text_x = width - h_border - offer_text_width
-		offer_text_y = height - v_border - offer_text_height 
-		frame_template['header_text'] = {	
-					'type' : 'text_string',
-					'text': offer_text, 
-					'x':offer_text_x,
-					'y':offer_text_y,
-					'font':font,
-					'font size':font_size,
-					'color':'#000000'
-					}
-
 	#offer text
-	if stamp > 60:
-		text = utils.text.preflight.text(offer['text'])
-		font = 'Helvetica Neue LT W1G 55 Roman'
-		font_size = 12				
-		text_width,text_height = flow.text_string.init(text,font,font_size).content_width/mm,flow.text_string.init(text,font,font_size).content_height/mm
-		text_x = width - h_border - text_width
-		text_y = logo_y + logo_height + price_height
+	if stamp > 31:
+		text_x = allign_x
+		text_y = price_y + price_height
 		frame_template['offer_text'] = {	
 					'type' : 'text_string',
 					'text': text, 
@@ -204,25 +282,19 @@ for stamp in range(0,80):
 					'color':'#000000'
 					}
 
-	#offer image
-	if stamp > 60:
-		offer_path = '/home/raven/gen_projects/horeca_23/images/done/528155-1-3.tif'
-		offer_box_width = logo_width/2
-		offer_box_height = (height - v_border*3 - logo_height)*0.8
-		offer_width,offer_height = utils.image.fit_to_box.init([offer_box_width,offer_box_height],offer_path)
-		offer_width = offer_width
-		offer_height = offer_height
-		
-		offer_x = logo_x + logo_width/4 - offer_width/2
-		offer_y = logo_y + logo_height + v_border + (height - v_border*3 - logo_height)*0.05
+	#offer header
+		offer_text_x = allign_x
+		offer_text_y = text_y + text_height + 0.25*mm
+		frame_template['header_text'] = {	
+					'type' : 'text_string',
+					'text': offer_text, 
+					'x':offer_text_x,
+					'y':offer_text_y,
+					'font':font,
+					'font size':font_size,
+					'color':'#000000'
+					}
 
-		frame_template['offer_image'] = {	
-		'type' : 'image',
-		'file_name': offer_path, 
-		'size':[offer_width,offer_height],
-		'x':offer_x,
-		'y':offer_y,
-		}
 
 	for name,data in frame_template.iteritems():
 		template[name] = data
