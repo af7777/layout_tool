@@ -29,28 +29,29 @@ def init(images_path,data_path):
 			row_number += 1
 			if row_number > 7:
 				adv_data[row[1]] = {'header':row[9],
-									'text':row[10]}
+									'text':row[10],
+									'image':row[0]}
 
 	#PLR json
-	json_file = open(os.path.join(data_path,'plr_data.txt'))
-	json_data = json.load(json_file)
-	json_file.close()
-	plr_images = {}
-	for cataloge_id,cataloge_data in json.loads(json_data).iteritems():
-		for prop_name,prop in cataloge_data.iteritems():
-			if prop_name == 'Pages':
-				for page_num,pages in prop.iteritems():
-					for page_market,frames in pages.iteritems():						
-						for frame_num,frame_data in frames.iteritems():
-							if frame_data['mcc_art'] != None:
-								try:
-									plr_images[frame_data['mcc_art'][0]] = frame_data['images'][0]
-								except IndexError:
-									plr_images[frame_data['mcc_art'][0]] = None
+	#json_file = open(os.path.join(data_path,'plr_data.txt'))
+	#json_data = json.load(json_file)
+	#json_file.close()
+	#plr_images = {}
+	#for cataloge_id,cataloge_data in json.loads(json_data).iteritems():
+	#	for prop_name,prop in cataloge_data.iteritems():
+	#		if prop_name == 'Pages':
+	#			for page_num,pages in prop.iteritems():
+	#				for page_market,frames in pages.iteritems():						
+	#					for frame_num,frame_data in frames.iteritems():
+	#						if frame_data['mcc_art'] != None:
+	#							try:
+	#								plr_images[frame_data['mcc_art'][0]] = frame_data['images'][0]
+	#							except IndexError:
+	#								plr_images[frame_data['mcc_art'][0]] = None
 	#reg init
 	offers = {}
 	image_pool = images_plain_folder.init(images_path)
-	path = os.path.join(data_path,'video_test.csv')
+	path = os.path.join(data_path,'68.csv')
 	print path
 	with open(path,'rb') as csvfile:
 		reader = csv.reader(csvfile,delimiter=';',quotechar='"')
@@ -67,10 +68,11 @@ def init(images_path,data_path):
 				page = row[16]
 				place_on_page = row[17]
 				markets = row[1]
-				if str(mgb_art) not in image_pool:
+				image_art = adv_data[mcc_art]['image']
+				if str(image_art) not in image_pool:
 					image = {'text': 'place holder', 'image path': '/home/raven/git/pages/imageDb/test1.jpg', 'clipping path': False}
 				else:
-					image = image_pool[mgb_art]
+					image = image_pool[image_art]
 				
 				offer = {
 						'page':page,

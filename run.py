@@ -16,7 +16,7 @@ from reportlab.lib.units import mm
 page_size = [210,297]
 pdf_dir = (os.path.join(os.getcwd(),'out/pdf'))
 
-offer_data = reg_text.init('/home/raven/gen_projects/horeca_23/images/done/','/home/raven/gen_projects/horeca_23')
+offer_data = reg_text.init('/home/raven/gen_projects/horeca_24/imageDB/','/home/raven/gen_projects/horeca_24/data')
 
 fonts.init()
 

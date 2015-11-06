@@ -15,4 +15,4 @@ class init(Flowable):
 		self.height = height
 		
 	def draw(self):		
-		self.canv.drawImage(self.path,0, 0, width=self.width, height=self.height)
+		self.canv.drawImage(self.path,0, 0, width=self.width, height=self.height,mask='auto')

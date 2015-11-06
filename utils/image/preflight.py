@@ -1,3 +1,5 @@
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
 import os
 from PIL import Image
 import shutil
@@ -74,11 +76,11 @@ def normalize_image(path,dest_path,verbose = False):
 			img2.save(os.path.join(dest_path,fname))
 
 if __name__ == "__main__":
-	for s_root,s_dirs,s_files in os.walk('/home/raven/gen_projects/horeca/images/source/'):
-		for s_f in s_files:
-			if check_path(os.path.join(s_root,s_f)) == True:
-				crop_clip(os.path.join(s_root,s_f),'/home/raven/gen_projects/horeca/images/clipped')
-			else:
-				shutil.copy(os.path.join(s_root,s_f),os.path.join('/home/raven/gen_projects/horeca/images/not_clipped_source'))
-	normalize_image('/home/raven/gen_projects/horeca/images/not_clipped_source','/home/raven/gen_projects/horeca/images/not_clipped')
+	#for s_root,s_dirs,s_files in os.walk('/home/raven/gen_projects/horeca/images/source/'):
+	#	for s_f in s_files:
+	#		if check_path(os.path.join(s_root,s_f)) == True:
+	#			crop_clip(os.path.join(s_root,s_f),'/home/raven/gen_projects/horeca/images/clipped')
+	#		else:
+	#			shutil.copy(os.path.join(s_root,s_f),os.path.join('/home/raven/gen_projects/horeca/images/not_clipped_source'))
+	normalize_image('/home/raven/gen_projects/horeca_24/imageDB_source/nc/','/home/raven/gen_projects/horeca_24/imageDB_source/ncd/')
 	#crop_clip('/home/raven/git/pages/imageDb/clip_test.tif','/home/raven/git/pages/imageDb/clip_test_result.tif')

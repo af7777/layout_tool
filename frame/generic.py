@@ -94,7 +94,7 @@ def init(template,sync_frames = True):
 							image_box_y = y + text_height + header_height + 2
 
 					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-					image_x = x + width*cx - image_width/2 + 1.5
+					image_x = x + width*cx - image_width/2
 					image_y = image_box_y + image_box_height*cy - image_height/2
 			
 
@@ -123,7 +123,7 @@ def init(template,sync_frames = True):
 							image_box_width = width*0.6
 
 					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-					image_x = x + width*cx - image_width/2 + 1.5
+					image_x = x + width*cx - image_width/2
 					image_y = image_box_y + 2
 		
 			if width < height:
@@ -148,7 +148,7 @@ def init(template,sync_frames = True):
 							image_box_y = y + text_height + header_height + 2
 
 					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-					image_x = x + width*cx - image_width/2 + 1.5
+					image_x = x + width*cx - image_width/2
 					image_y = image_box_y + image_box_height/2 - image_height/2
 			
 
@@ -177,7 +177,7 @@ def init(template,sync_frames = True):
 							image_box_y = y + text_height + header_height + 2
 
 					image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-					image_x = x + width*cx - image_width/2 + 1.5
+					image_x = x + width*cx - image_width/2
 					image_y = image_box_y + 2
 
 			if int(content['mgb art']) in [192750,330433,530652,530653,296683,299384,143277,184155,256670,488128,138207]:
@@ -186,7 +186,7 @@ def init(template,sync_frames = True):
 				image_box_y = y + text_height + header_height + 2
 
 				image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-				image_x = x + width*cx - image_width/2 + 1.5
+				image_x = x + width*cx - image_width/2
 				image_y = image_box_y +1
 										
 			#if int(content['mgb art']) in []:
@@ -195,7 +195,7 @@ def init(template,sync_frames = True):
 			#	image_box_y = y + text_height + header_height + 2
 
 			#	image_width,image_height = utils.image.fit_to_box.init([image_box_width,image_box_height],image_path)
-			#	image_x = x + width*cx - image_width/2 + 1.5
+			#	image_x = x + width*cx - image_width/2
 			#	image_y = image_box_y
 			
 			try:
@@ -223,7 +223,7 @@ def init(template,sync_frames = True):
 					'y':logo_y,
 					}
 
-			if int(content['mgb art']) in [281977,295820,322816,322824,269072,192750,330433,530652,530653,296683,299384,530354,286322,488128,330433,138207,530653,296683,284591]:
+			if int(content['mgb art']) in [295333,285367,296664,433587,346919,488128,313876,313900,295790,295815,269074,29533,322820,346919,488128,313876,313900,140149,503389]:
 				logo_box_width,logo_box_height = [15,15]
 				logo_path = '/home/raven/git/pages/imageDb/horeca/ZAMOROZCA.png'  
 				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
@@ -236,7 +236,7 @@ def init(template,sync_frames = True):
 					'x':logo_x,
 					'y':logo_y,
 					}
-			if int(content['mgb art']) in [274443]:
+			if int(content['mgb art']) in [25628]:
 				logo_box_width,logo_box_height = [5,5]
 				logo_path = '/home/raven/gen_projects/horeca_23/box_20.jpg'  
 				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
@@ -251,7 +251,7 @@ def init(template,sync_frames = True):
 					}
 			if int(content['mgb art']) in [28115]:
 				logo_box_width,logo_box_height = [5,5]
-				logo_path = '/home/raven/gen_projects/horeca_23/box_4.jpg'  
+				logo_path = '/home/raven/gen_projects/horeca_23/box_4.png'  
 				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
 				logo_x = x + width - logo_width - 4
 				logo_y = y + price_height - 2
@@ -262,7 +262,48 @@ def init(template,sync_frames = True):
 					'x':logo_x,
 					'y':logo_y,
 					}
-			if int(content['mgb art']) in [251689]:
+			if int(content['mgb art']) in [57058]:
+				logo_box_width,logo_box_height = [5,5]
+				logo_path = '/home/raven/gen_projects/horeca_23/box_10.png'  
+				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
+				logo_x = x + width - logo_width - 4
+				logo_y = y + price_height - 2
+				frame_template[str(obj_name) + '_box4'] = {	
+					'type' : 'logo',
+					'file_name': logo_path, 
+					'size':[logo_width,logo_height],
+					'x':logo_x,
+					'y':logo_y,
+					}
+			if int(content['mgb art']) in [264117]:
+				logo_box_width,logo_box_height = [5,5]
+				logo_path = '/home/raven/gen_projects/horeca_23/box_3.png'  
+				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
+				logo_x = x + width - logo_width - 4
+				logo_y = y + price_height - 2
+				frame_template[str(obj_name) + '_box4'] = {	
+					'type' : 'logo',
+					'file_name': logo_path, 
+					'size':[logo_width,logo_height],
+					'x':logo_x,
+					'y':logo_y,
+					}
+
+			if int(content['mgb art']) in [100460]:
+				logo_box_width,logo_box_height = [5,5]
+				logo_path = '/home/raven/gen_projects/horeca_23/box_2.png'  
+				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
+				logo_x = x + width - logo_width - 4
+				logo_y = y + price_height - 2
+				frame_template[str(obj_name) + '_box12'] = {	
+					'type' : 'logo',
+					'file_name': logo_path, 
+					'size':[logo_width,logo_height],
+					'x':logo_x,
+					'y':logo_y,
+					}
+
+			if int(content['mgb art']) in [40066]:
 				logo_box_width,logo_box_height = [5,5]
 				logo_path = '/home/raven/gen_projects/horeca_23/box_12.jpg'  
 				logo_width,logo_height = utils.image.fit_to_box.init([logo_box_width,logo_box_height],logo_path)
@@ -276,7 +317,7 @@ def init(template,sync_frames = True):
 					'y':logo_y,
 					}
 
-			if int(content['mgb art']) in [427356,131053]:
+			if int(content['mgb art']) in [450608]:
 				logo_box_width,logo_box_height = [5,5]
 				text = 'от '
 				font = 'Helvetica Neue LT W1G 55 Roman'
